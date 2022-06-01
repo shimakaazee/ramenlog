@@ -26,6 +26,7 @@ public class EmployeeController {
     @PostMapping("/login")
     public R<Employee> login(HttpServletRequest request, @RequestBody Employee employee) {
 
+        System.out.println(111);
         String password = employee.getPassword();
         password = DigestUtils.md5DigestAsHex(password.getBytes());
        /* LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
