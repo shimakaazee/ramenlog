@@ -26,7 +26,6 @@ public class EmployeeController {
     @PostMapping("/login")
     public R<Employee> login(HttpServletRequest request, @RequestBody Employee employee) {
 
-        System.out.println(111);
         String password = employee.getPassword();
         password = DigestUtils.md5DigestAsHex(password.getBytes());
        /* LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper<>();
@@ -52,5 +51,11 @@ public class EmployeeController {
         request.getSession().setAttribute("employee", emp.getId());
 
         return R.success(emp);
+    }
+
+    @PostMapping("/logout")
+    public R<String> logout(HttpServletRequest request) {
+        request.getSession().removeAttribute("employee");
+        return R.success("ログアウト成功");
     }
 }
