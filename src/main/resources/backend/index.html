@@ -79,7 +79,7 @@
               <span>{{headTitle}}</span>
             </div>
             <div class="right-menu">
-              <div class="avatar-wrapper">{{ userInfo.username }}</div>
+              <div class="avatar-wrapper">{{ userInfo.name }}</div>
               <!-- <div class="logout" @click="logout">退出</div> -->
               <img src="images/icons/btn_close@2x.png" class="outLogin" alt="退出" @click="logout" />
             </div>
@@ -152,7 +152,7 @@
               // },
             ],
             iframeUrl: 'page/member/list.html',
-            headTitle: 'スタッフ管理',
+            headTitle: '',
             goBackFlag: false,
             loading: true,
             timer: null

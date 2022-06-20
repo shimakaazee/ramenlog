@@ -2,18 +2,18 @@ package com.jec.ramenlog.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jec.ramenlog.common.R;
 import com.jec.ramenlog.entity.Employee;
 import com.jec.ramenlog.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 
 @Slf4j
 @RestController
@@ -58,4 +58,91 @@ public class EmployeeController {
         request.getSession().removeAttribute("employee");
         return R.success("ログアウト成功");
     }
+
+    // add staff
+    @PostMapping
+    public R<String> save(HttpServletRequest request, @RequestBody Employee employee) {
+        log.info("staff info：{}", employee.toString());
+
+        employee.setPassword((DigestUtils.md5DigestAsHex("123456".getBytes())));
+        employee.setPosition("2");
+        employee.setCreateTime(LocalDateTime.now());
+        employee.setUpdateTime(LocalDateTime.now());
+
+        // current user id
+        int empId = (int) request.getSession().getAttribute("employee");
+        System.out.println(empId);
+        employee.setCreateUser(empId);
+        employee.setUpdateUser(empId);
+
+        employeeService.save(employee);
+        return R.success("スタッフ add success!");
+
+
+    }
+
+    /**
+     * paging search
+     *
+     * @param page
+     * @param pageSize
+     * @param name
+     * @return
+     */
+    @GetMapping("/page")
+    public R<Page> page(int page, int pageSize, String name) {
+        log.info("page = {},pageSize = {},name = {}", page, pageSize, name);
+
+
+        Page pageInfo = new Page(page, pageSize);
+
+
+        LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper();
+
+        queryWrapper.like(StringUtils.isNotEmpty(name), Employee::getName, name);
+
+        queryWrapper.orderByDesc(Employee::getUpdateTime);
+
+
+        employeeService.page(pageInfo, queryWrapper);
+
+        return R.success(pageInfo);
+    }
+
+    /**
+     * edit by id
+     *
+     * @param employee
+     * @return
+     */
+    @PutMapping
+    public R<String> update(HttpServletRequest request, @RequestBody Employee employee) {
+        log.info(employee.toString());
+
+        int empId = (int) request.getSession().getAttribute("employee");
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(empId);
+        employeeService.updateById(employee);
+
+        return R.success("スタッフ edit success!");
+    }
+
+    /**
+     * search by id
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public R<Employee> getById(@PathVariable Long id) {
+        log.info("search by id...");
+        Employee employee = employeeService.getById(id);
+        if (employee != null) {
+            return R.success(employee);
+        }
+        return R.error("not found");
+    }
 }
+
+
+
