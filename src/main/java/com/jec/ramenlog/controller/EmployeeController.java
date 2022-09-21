@@ -66,14 +66,6 @@ public class EmployeeController {
 
         employee.setPassword((DigestUtils.md5DigestAsHex("123456".getBytes())));
         employee.setPosition("2");
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-
-        // current user id
-        int empId = (int) request.getSession().getAttribute("employee");
-        System.out.println(empId);
-        employee.setCreateUser(empId);
-        employee.setUpdateUser(empId);
 
         employeeService.save(employee);
         return R.success("スタッフ add success!");
@@ -119,9 +111,8 @@ public class EmployeeController {
     public R<String> update(HttpServletRequest request, @RequestBody Employee employee) {
         log.info(employee.toString());
 
-        int empId = (int) request.getSession().getAttribute("employee");
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(empId);
+        long id = Thread.currentThread().getId();
+        log.info("线程id为：{}",id);
         employeeService.updateById(employee);
 
         return R.success("スタッフ edit success!");
@@ -134,7 +125,7 @@ public class EmployeeController {
      * @return
      */
     @GetMapping("/{id}")
-    public R<Employee> getById(@PathVariable Long id) {
+    public R<Employee> getById(@PathVariable int id) {
         log.info("search by id...");
         Employee employee = employeeService.getById(id);
         if (employee != null) {

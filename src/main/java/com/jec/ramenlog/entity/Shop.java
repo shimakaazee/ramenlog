@@ -1,41 +1,56 @@
 package com.jec.ramenlog.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ 菜品
+ */
 @Data
-public class Employee implements Serializable {
+public class Shop implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private int id;
 
-    private String position;
-
     private String name;
 
+    private int category_id;
+
+    private String describe_1;
+    private String describe_2;
+    private String describe_3;
+    private double score;
+    private String area;
+    private String location_1;
+    private String location_2;
+    private int price;
+    private String close_station;
     private String phone;
+    private int status;
+    private String image;
 
-    private String username;
 
-    private String password;
-
-    private String sex;
-
-    private Integer status;
 
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
+
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
+
     @TableField(fill = FieldFill.INSERT)
-    private int createUser;
+    private Long createUser;
+
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private int updateUser;
+    private Long updateUser;
+
 }
