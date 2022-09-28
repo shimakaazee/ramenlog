@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * category management
  */
@@ -58,9 +60,9 @@ public class CategoryController {
      * @return
      */
     @DeleteMapping
-    public R<String> delete(Long id){
+    public R<String> delete(int id){
         log.info("delete category，id:{}",id);
-        categoryService.removeById(id);
+        categoryService.remove(id);
 
 
         return R.success("delete success");
@@ -78,5 +80,17 @@ public class CategoryController {
         categoryService.updateById(category);
 
         return R.success("update success");
+    }
+
+    @GetMapping("/list")
+    public R<List<Category>> list(Category category){
+
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+
+        queryWrapper.eq(category.getType() != null,Category::getType,category.getType());
+        queryWrapper.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
+
+        List<Category> list = categoryService.list(queryWrapper);
+        return R.success(list);
     }
 }

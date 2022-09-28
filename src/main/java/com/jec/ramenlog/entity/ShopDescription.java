@@ -1,40 +1,29 @@
 package com.jec.ramenlog.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- 菜品
+菜品口味
  */
 @Data
-public class Shop implements Serializable {
+public class ShopDescription implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private int id;
 
+
+    private int shopId;
+
+
     private String name;
 
-    private int category_id;
 
-    private String info_1;
-    private String info_2;
-    private double score;
-    private String area;
-    private String location_1;
-    private String location_2;
-    private int price;
-    private String close_station;
-    private String phone;
-    private int status;
-    private String image;
-
+    private String value;
 
 
     @TableField(fill = FieldFill.INSERT)
@@ -51,5 +40,8 @@ public class Shop implements Serializable {
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUser;
+
+
+    private Integer isDeleted;
 
 }

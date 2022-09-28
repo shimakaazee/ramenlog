@@ -3,7 +3,9 @@ package com.jec.ramenlog.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jec.ramenlog.common.R;
+import com.jec.ramenlog.entity.Category;
 import com.jec.ramenlog.entity.Shop;
+import com.jec.ramenlog.service.ShopDescriptionService;
 import com.jec.ramenlog.service.ShopService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,8 @@ import java.util.stream.Collectors;
 public class ShopController {
     @Autowired
     private ShopService shopService;
+    @Autowired
+    private ShopDescriptionService shopDescriptionService;
 
 
     /**
@@ -40,7 +44,7 @@ public class ShopController {
     }
 
     /**
-     * 菜品信息分页查询
+     * shop paging
      * @param page
      * @param pageSize
      * @param name
@@ -91,4 +95,5 @@ public class ShopController {
         shopService.updateById(shop);
         return R.success("edit success");
     }
+
 }

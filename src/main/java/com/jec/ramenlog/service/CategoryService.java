@@ -6,6 +6,6 @@ import com.jec.ramenlog.entity.Category;
 
 public interface CategoryService extends IService<Category> {
 
-
+    void remove(int id);
 
 }
