@@ -21,7 +21,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
         LambdaQueryWrapper<Shop> shopLambdaQueryWrapper = new LambdaQueryWrapper<>();
 
-        shopLambdaQueryWrapper.eq(Shop::getCategory_id, id);
+        shopLambdaQueryWrapper.eq(Shop::getCategoryId, id);
 
         int count = shopService.count(shopLambdaQueryWrapper);
 

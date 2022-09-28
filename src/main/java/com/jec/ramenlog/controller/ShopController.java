@@ -3,6 +3,7 @@ package com.jec.ramenlog.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jec.ramenlog.common.R;
+import com.jec.ramenlog.dto.ShopDto;
 import com.jec.ramenlog.entity.Category;
 import com.jec.ramenlog.entity.Shop;
 import com.jec.ramenlog.service.ShopDescriptionService;
@@ -35,10 +36,10 @@ public class ShopController {
      * @return
      */
     @PostMapping
-    public R<String> save(@RequestBody Shop shop){
-        log.info(shop.toString());
+    public R<String> save(@RequestBody ShopDto shopDto){
+        log.info(shopDto.toString());
 
-        shopService.save(shop);
+        shopService.saveWithDescription(shopDto);
 
         return R.success("add shop success");
     }

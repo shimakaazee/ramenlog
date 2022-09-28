@@ -21,7 +21,7 @@ public class Shop implements Serializable {
 
     private String name;
 
-    private int category_id;
+    private int categoryId;
 
     private String info_1;
     private String info_2;
