@@ -16,7 +16,7 @@
       <div class="tableBar">
         <el-input
           v-model="input"
-          placeholder="请输入菜品名称"
+          placeholder="店舗名を入力してください"
           style="width: 250px"
           clearable
           @keyup.enter.native="handleQuery"
@@ -36,7 +36,7 @@
             type="primary"
             @click="addFoodtype('add')"
           >
-            + 新建菜品
+            + 店舗登録
           </el-button>
         </div>
       </div>
@@ -52,9 +52,9 @@
         ></el-table-column>
         <el-table-column
           prop="name"
-          label="菜品名称"
+          label="店舗名"
         ></el-table-column>
-        <el-table-column prop="image" label="图片" align="center">
+        <el-table-column prop="image" label="写真" align="center">
           <template slot-scope="{ row }">
             <el-image style="width: auto; height: 40px; border:none;cursor: pointer;" 
             :src="getImage(row.image)" 
@@ -67,21 +67,21 @@
         </el-table-column>
         <el-table-column
           prop="categoryName"
-          label="菜品分类"
+          label="店舗分類"
         ></el-table-column>
-        <el-table-column label="售价">
+        <el-table-column label="価格">
           <template slot-scope="scope">
             <span style="margin-right: 10px;">￥{{ scope.row.price/100 }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="售卖状态">
+        <el-table-column label="ステータス">
           <template slot-scope="scope">
-            <span style="margin-right: 10px;">{{ scope.row.status == '0' ? '停售' : '启售' }}</span>
+            <span style="margin-right: 10px;">{{ scope.row.status == '0' ? 'オフライン' : 'オンライン' }}</span>
           </template>
         </el-table-column>
         <el-table-column
           prop="updateTime"
-          label="最后操作时间"
+          label="最終動作時間"
         >
         </el-table-column>
         <el-table-column
@@ -96,7 +96,7 @@
               class="blueBug"
               @click="addFoodtype(scope.row.id)"
             >
-              修改
+              変更
             </el-button>
             <el-button
               type="text"
@@ -112,7 +112,7 @@
               class="delBut non"
               @click="deleteHandle('单删', scope.row.id)"
             >
-              删除
+              削除
             </el-button>
           </template>
         </el-table-column>

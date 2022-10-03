@@ -35,13 +35,13 @@ public class ShopDescription implements Serializable {
 
 
     @TableField(fill = FieldFill.INSERT)
-    private Long createUser;
+    private int createUser;
 
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Long updateUser;
+    private int updateUser;
 
 
-    private Integer isDeleted;
+    private int isDeleted;
 
 }

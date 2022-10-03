@@ -63,96 +63,97 @@
         >
             <div>
                 <el-form-item
-                        label="name:"
+                        label="店舗名:"
                         prop="name"
                 >
                     <el-input
                             v-model="ruleForm.name"
-                            placeholder="please input the shop name:"
+                            placeholder="店舗名を入力してください:"
                             maxlength="20"
                     />
                 </el-form-item>
                 <el-form-item
-                        label="菜品分类:"
+                        label="店舗分類:"
                         prop="categoryId"
                 >
                     <el-select
                             v-model="ruleForm.categoryId"
-                            placeholder="请选择菜品分类"
+                            placeholder="店舗分類を選択してください"
                     >
                         <el-option v-for="(item,index) in dishList" :key="index" :label="item.name" :value="item.id"/>
                     </el-select>
                 </el-form-item>
                 <div>
                     <el-form-item
-                            label="price:"
+                            label="予算:"
                             prop="price"
                     >
                         <el-input
                                 v-model="ruleForm.price"
-                                placeholder="please input the price"
+                                placeholder="予算を入力してください"
                         />
                     </el-form-item>
                 </div>
                 <div>
                     <el-form-item
-                            label="area:"
+                            label="地域:"
                             prop="area"
                     >
-                        <el-input
-                                v-model="ruleForm.area"
-                                placeholder="please input the area"
-                        />
+                        <el-select v-model="ruleForm.area">
+                            <el-option v-for="item in options" :value="item.value" :key="item.value" :label="item.label"></el-option>
+                        </el-select>
                     </el-form-item>
+
+
                 </div>
                 <div>
                     <el-form-item
-                            label="location:"
-                            prop="location"
+                            label="店舗住所:"
+                            prop="location_1"
                     >
                         <el-input
                                 v-model="ruleForm.location_1"
-                                placeholder="please input the location"
+                                placeholder="店舗住所を入力してください"
                         />
                     </el-form-item>
                 </div>
-                <div>
-                    <el-form-item
-                            label="location:"
-                            prop="location"
-                    >
-                        <el-input
-                                v-model="ruleForm.location_1"
-                                placeholder="please input the location"
-                        />
-                    </el-form-item>
-                </div>
+                <!--      <div>
+                          <el-form-item
+                                  label="location_2:"
+                                  prop="location_2"
+                          >
+                              <el-input
+                                      v-model="ruleForm.location_2"
+                                      placeholder="please input the location"
+                              />
+                          </el-form-item>
+                      </div>-->
 
                 <div>
                     <el-form-item
-                            label="phone:"
-                            prop="phneo"
+                            label="電話番号:"
+                            prop="phone"
                     >
                         <el-input
                                 v-model="ruleForm.phone"
-                                placeholder="please input the phone number"
+                                placeholder="電話番号を入力してください"
                         />
                     </el-form-item>
                 </div>
-                <el-form-item label="口味做法配置:">
+                <el-form-item label="店舗タグ設定:">
                     <el-form-item>
                         <div class="flavorBox">
               <span
                       v-if="dishFlavors.length == 0"
                       class="addBut"
                       @click="addFlavore"
-              > + 添加口味</span>
+              > 店舗タグの追加</span>
                             <div
                                     v-if="dishFlavors.length != 0"
                                     class="flavor"
                             >
                                 <div class="title">
-                                    <span>口味名（3个字内）</span><span>口味标签（输入标签回车添加）</span>
+                                    <span>タグ名</span><span>タグ</span>
                                 </div>
                                 <div class="cont">
                                     <div
@@ -161,11 +162,11 @@
                                             class="items"
                                     >
                                         <div class="itTit">
-                                           <SelectInput
-                                              :dish-flavors-data="dishFlavorsData"
-                                              :index="index"
-                                              :value="item.name"
-                                              @select="selectHandle"
+                                            <SelectInput
+                                                    :dish-flavors-data="dishFlavorsData"
+                                                    :index="index"
+                                                    :value="item.name"
+                                                    @select="selectHandle"
                                             />
                                             <div class="selectInput">
                                                 <div>
@@ -173,7 +174,7 @@
                                                             v-model="item.name"
                                                             type="text"
                                                             style="width: 100%"
-                                                            placeholder="请输入口味"
+                                                            placeholder="タグを入力してください"
                                                             @focus="selectFlavor(true,index)"
                                                             @blur="outSelect(false,index)"
                                                             @input="inputHandle(index)"
@@ -189,7 +190,7 @@
                                                     <span
                                                             v-if="dishFlavorsData == []"
                                                             class="none"
-                                                    >无数据</span>
+                                                    >データなし</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -212,14 +213,14 @@
                                         <span
                                                 class="delFlavor delBut non"
                                                 @click="delFlavor(index)"
-                                        >删除</span>
+                                        >削除</span>
                                     </div>
                                 </div>
                                 <div
                                         class="addBut"
                                         @click="addFlavore"
                                 >
-                                    添加口味
+                                    タグの追加
                                 </div>
                             </div>
                         </div>
@@ -229,7 +230,7 @@
                 </div>
                 <div>
                     <el-form-item
-                            label="image:"
+                            label="画像:"
                             prop="region"
                             class="uploadImg"
                     >
@@ -245,7 +246,7 @@
                                     v-if="imageUrl"
                                     :src="imageUrl"
                                     class="avatar"
-                            ></img>
+                            />
                             <i
                                     v-else
                                     class="el-icon-plus avatar-uploader-icon"
@@ -255,14 +256,14 @@
                 </div>
                 <div class="address">
                     <el-form-item
-                            label="describe:"
-                            prop="region"
+                            label="店舗情報:"
+                            prop="describe"
                     >
                         <el-input
-                                v-model="ruleForm.description"
+                                v-model="ruleForm.info_1"
                                 type="textarea"
                                 :rows="3"
-                                placeholder="please input the description"
+                                placeholder="店舗情報を入力してください"
                                 maxlength="200"
                         />
                     </el-form-item>
@@ -270,13 +271,13 @@
                 <div class="subBox address">
                     <el-form-item>
                         <el-button @click="goBack()">
-                            取消
+                            キャンセル
                         </el-button>
                         <el-button
                                 type="primary"
                                 @click="submitForm('ruleForm')"
                         >
-                            保存
+                            セーブ
                         </el-button>
                         <el-button
                                 v-if="actionType == 'add'"
@@ -288,7 +289,9 @@
                         </el-button>
                     </el-form-item>
                 </div>
+            </div>
         </el-form>
+
     </div>
 </div>
 <!-- 开发环境版本，包含了有帮助的命令行警告 -->
@@ -318,16 +321,38 @@
                 vueRest: '1',
                 index: 0,
                 inputStyle: {'flex': 1},
+                options:[
+                    {
+                        value:'新宿',
+                        label:'新宿'
+                    },
+                    {
+                        value:'代々木',
+                        label:'代々木'
+                    },
+                    {
+                        value:'大久保',
+                        label:'大久保'
+                    },
+                    {
+                        value:'池袋',
+                        label:'池袋'
+                    },
+                    {
+                        value:'高田馬場',
+                        label:'高田馬場'
+                    }
+                ],
                 ruleForm: {
                     'name': '',
                     'id': '',
                     'price': '',
                     'code': '',
                     'image': '',
-                    'description': '',
+                    'info_1': '',
                     'dishFlavors': [],
                     'status': true,
-                    categoryId: ''
+                    categoryId: '',
                 },
                 mak: false
             }
@@ -339,7 +364,7 @@
                         {'required': true, 'message': '请填写菜品名称', 'trigger': 'blur'}
                     ],
                     'categoryId': [
-                        {'required': true, 'message': '请选择菜品分类', 'trigger': 'change'}
+                        {'required': true, 'message': '店舗分類を選択してください', 'trigger': 'change'}
                     ],
                     'price': [
                         {
@@ -347,7 +372,7 @@
                             // 'message': '请填写菜品价格',
                             validator: (rules, value, callback) => {
                                 if (!value) {
-                                    callback(new Error('请填写菜品价格'))
+                                    callback(new Error('店舗名をご記入ください'))
                                 } else {
                                     const reg = /^\d+(\.\d{0,2})?$/
                                     if (reg.test(value)) {
@@ -369,7 +394,7 @@
         },
         created() {
             this.getDishList()
-            // 口味临时数据
+
             this.getFlavorListHand()
             this.id = requestUrlParam('id')
             this.actionType = this.id ? 'edit' : 'add'
@@ -449,14 +474,12 @@
                 })
             },
 
-            // 获取口味列表
+
             getFlavorListHand() {
                 // flavor flavorData
                 this.dishFlavorsData = [
-                    {'name': '甜味', 'value': ['无糖', '少糖', '半糖', '多糖', '全糖']},
-                    {'name': '温度', 'value': ['热饮', '常温', '去冰', '少冰', '多冰']},
-                    {'name': '忌口', 'value': ['不要葱', '不要蒜', '不要香菜', '不要辣']},
-                    {'name': '辣度', 'value': ['不辣', '微辣', '中辣', '重辣']}
+                    {'name': '支払方法', 'value': ['カード可', '電子マネー不可', 'QRコード決済不可']},
+                    {'name': '予約可否', 'value': ['予約可', '予約不可']},
                 ]
             },
 
@@ -502,7 +525,7 @@
                         params.status = this.ruleForm ? 1 : 0
                         params.price *= 100
                         params.categoryId = this.ruleForm.categoryId
-                        params.flavors = this.dishFlavors.map(obj => ({...obj, value: JSON.stringify(obj.value)}))
+                        params.descriptions = this.dishFlavors.map(obj => ({...obj, value: JSON.stringify(obj.value)}))
                         delete params.dishFlavors
                         /*  if(!this.imageUrl){
                             this.$message.error('请上传菜品图片')
@@ -525,7 +548,7 @@
                                             'price': '',
                                             'code': '',
                                             'image': '',
-                                            'description': '',
+                                            'info_1': '',
                                             'dishFlavors': [],
                                             'status': true,
                                             categoryId: ''

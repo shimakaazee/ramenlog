@@ -29,7 +29,7 @@ public class Shop implements Serializable {
     private String area;
     private String location_1;
     private String location_2;
-    private int price;
+    private Integer price;
     private String close_station;
     private String phone;
     private int status;
@@ -46,10 +46,10 @@ public class Shop implements Serializable {
 
 
     @TableField(fill = FieldFill.INSERT)
-    private Long createUser;
+    private int createUser;
 
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Long updateUser;
+    private int updateUser;
 
 }
