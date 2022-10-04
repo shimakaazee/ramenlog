@@ -105,7 +105,7 @@ public class ShopController {
      * @return
      */
     @GetMapping("/{id}")
-    public R<Shop> getById(@PathVariable Long id) {
+    public R<Shop> getById(@PathVariable int id) {
 
         Shop shop = shopService.getById(id);
         return R.success(shop);

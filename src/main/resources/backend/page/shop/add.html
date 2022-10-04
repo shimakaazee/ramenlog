@@ -100,7 +100,8 @@
                             prop="area"
                     >
                         <el-select v-model="ruleForm.area">
-                            <el-option v-for="item in options" :value="item.value" :key="item.value" :label="item.label"></el-option>
+                            <el-option v-for="item in options" :value="item.value" :key="item.value"
+                                       :label="item.label"></el-option>
                         </el-select>
                     </el-form-item>
 
@@ -321,26 +322,26 @@
                 vueRest: '1',
                 index: 0,
                 inputStyle: {'flex': 1},
-                options:[
+                options: [
                     {
-                        value:'新宿',
-                        label:'新宿'
+                        value: '新宿',
+                        label: '新宿'
                     },
                     {
-                        value:'代々木',
-                        label:'代々木'
+                        value: '代々木',
+                        label: '代々木'
                     },
                     {
-                        value:'大久保',
-                        label:'大久保'
+                        value: '大久保',
+                        label: '大久保'
                     },
                     {
-                        value:'池袋',
-                        label:'池袋'
+                        value: '池袋',
+                        label: '池袋'
                     },
                     {
-                        value:'高田馬場',
-                        label:'高田馬場'
+                        value: '高田馬場',
+                        label: '高田馬場'
                     }
                 ],
                 ruleForm: {
@@ -361,7 +362,7 @@
             rules() {
                 return {
                     'name': [
-                        {'required': true, 'message': '请填写菜品名称', 'trigger': 'blur'}
+                        {'required': true, 'message': '店舗名をご記入ください', 'trigger': 'blur'}
                     ],
                     'categoryId': [
                         {'required': true, 'message': '店舗分類を選択してください', 'trigger': 'change'}
@@ -369,10 +370,10 @@
                     'price': [
                         {
                             'required': true,
-                            // 'message': '请填写菜品价格',
+
                             validator: (rules, value, callback) => {
                                 if (!value) {
-                                    callback(new Error('店舗名をご記入ください'))
+                                    callback(new Error('予算をご記入ください'))
                                 } else {
                                     const reg = /^\d+(\.\d{0,2})?$/
                                     if (reg.test(value)) {
@@ -381,8 +382,9 @@
                                         } else {
                                             callback(new Error('菜品价格小于10000'))
                                         }
+
                                     } else {
-                                        callback(new Error('菜品价格格式只能为数字,且最多保留两位小数'))
+                                        callback(new Error('数字を入力してください'))
                                     }
                                 }
                             },
@@ -410,7 +412,7 @@
                     console.log(res)
                     if (String(res.code) === '1') {
                         this.ruleForm = {...res.data}
-                        this.ruleForm.price = String(res.data.price / 100)
+                        this.ruleForm.price = String(res.data.price)
                         this.ruleForm.status = res.data.status == '1'
                         this.dishFlavors = res.data.flavors && res.data.flavors.map(obj => ({
                             ...obj,
@@ -422,31 +424,26 @@
                         // this.imageUrl = res.data.data.image
                         this.imageUrl = `/common/download?name=${res.data.image}`
                     } else {
-                        this.$message.error(res.msg || '操作失败')
+                        this.$message.error(res.msg || '操作失敗')
                     }
                 })
             },
-            // 按钮 - 添加口味
             addFlavore() {
                 this.dishFlavors.push({'name': '', 'value': [], showOption: false}) // JSON.parse(JSON.stringify(this.dishFlavorsData))
             },
 
-            // 按钮 - 删除口味
             delFlavor(ind) {
                 this.dishFlavors.splice(ind, 1)
             },
 
-            // 按钮 - 删除口味标签
             delFlavorLabel(index, ind) {
                 this.dishFlavors[index].value.splice(ind, 1)
             },
 
-            //口味位置记录
             flavorPosition(index) {
                 this.index = index
             },
 
-            // 添加口味标签
             keyDownHandle(val, index) {
                 console.log('keyDownHandle----val', val)
                 console.log('keyDownHandle----index', index)
@@ -463,7 +460,6 @@
                 }
             },
 
-            // 获取菜品分类
             getDishList() {
                 getCategoryList({'type': 1}).then(res => {
                     if (res.code === 1) {
@@ -476,7 +472,6 @@
 
 
             getFlavorListHand() {
-                // flavor flavorData
                 this.dishFlavorsData = [
                     {'name': '支払方法', 'value': ['カード可', '電子マネー不可', 'QRコード決済不可']},
                     {'name': '予約可否', 'value': ['予約可', '予約不可']},
@@ -523,24 +518,19 @@
                         let params = {...this.ruleForm}
                         // params.flavors = this.dishFlavors
                         params.status = this.ruleForm ? 1 : 0
-                        params.price *= 100
                         params.categoryId = this.ruleForm.categoryId
                         params.descriptions = this.dishFlavors.map(obj => ({...obj, value: JSON.stringify(obj.value)}))
                         delete params.dishFlavors
-                        /*  if(!this.imageUrl){
-                            this.$message.error('请上传菜品图片')
-                            return
-                          }*/
+
                         if (this.actionType == 'add') {
                             delete params.id
                             addDish(params).then(res => {
                                 if (res.code === 1) {
-                                    this.$message.success('菜品添加成功！')
+                                    this.$message.success('店舗登録成功！')
                                     if (!st) {
                                         this.goBack()
                                     } else {
                                         this.dishFlavors = []
-                                        // this.dishFlavorsData = []
                                         this.imageUrl = ''
                                         this.ruleForm = {
                                             'name': '',
@@ -555,22 +545,22 @@
                                         }
                                     }
                                 } else {
-                                    this.$message.error(res.msg || '操作失败')
+                                    this.$message.error(res.msg || '操作失敗')
                                 }
                             }).catch(err => {
-                                this.$message.error('请求出错了：' + err)
+                                this.$message.error('request error：' + err)
                             })
                         } else {
                             delete params.updateTime
                             editDish(params).then(res => {
                                 if (res.code === 1) {
-                                    this.$message.success('菜品修改成功！')
+                                    this.$message.success('店舗更新成功！')
                                     this.goBack()
                                 } else {
-                                    this.$message.error(res.msg || '操作失败')
+                                    this.$message.error(res.msg || '操作失敗')
                                 }
                             }).catch(err => {
-                                this.$message.error('请求出错了：' + err)
+                                this.$message.error('request error：' + err)
                             })
                         }
                     } else {
@@ -580,8 +570,8 @@
             },
 
             handleAvatarSuccess(response, file, fileList) {
-                // 拼接down接口预览
-                if (response.code === 0 && response.msg === '未登录') {
+
+                if (response.code === 0 && response.msg === 'ログインしていない') {
                     window.top.location.href = '/backend/page/login/login.html'
                 } else {
                     this.imageUrl = `/common/download?name=${response.data}`
@@ -594,12 +584,12 @@
                     const suffix = file.name.split('.')[1]
                     const size = file.size / 1024 / 1024 < 2
                     if (['png', 'jpeg', 'jpg'].indexOf(suffix) < 0) {
-                        this.$message.error('上传图片只支持 png、jpeg、jpg 格式！')
+                        this.$message.error('画像のアップロードは、png, jpeg, jpg形式のみ対応しています')
                         this.$refs.upload.clearFiles()
                         return false
                     }
                     if (!size) {
-                        this.$message.error('上传文件大小不能超过 2MB!')
+                        this.$message.error('アップロードできるファイルのサイズは2MBまでです')
                         return false
                     }
                     return file
@@ -609,8 +599,8 @@
             goBack() {
                 window.parent.menuHandle({
                     id: '4',
-                    url: '/backend/page/food/list.html',
-                    name: '菜品管理'
+                    url: '/backend/page/shop/list.html',
+                    name: '店舗管理'
                 }, false)
             }
         }

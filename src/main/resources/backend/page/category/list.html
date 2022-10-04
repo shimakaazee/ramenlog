@@ -38,19 +38,19 @@
       >
         <el-table-column
           prop="name"
-          label="分类名称"
+          label="分類名"
         /></el-table-column>
         <el-table-column
           prop="type"
-          label="分类类型"
+          label="種類"
         >
           <template slot-scope="scope">
-            <span>{{ scope.row.type == '1' ? '菜品分类': '套餐分类' }}</span>
+            <span>{{ scope.row.type == '1' ? '料理別': '' }}</span>
           </template>
         </el-table-column>
         <el-table-column
           prop="updateTime"
-          label="操作时间"
+          label="操作時間"
         >
         <template slot-scope="scope">
          {{scope.row.updateTime}}

@@ -40,13 +40,13 @@ public class CategoryController {
      * @param pageSize
      * @return
      */
+    @CrossOrigin
     @GetMapping("/page")
     public R<Page> page(int page,int pageSize){
 
         Page<Category> pageInfo = new Page<>(page,pageSize);
         //condition
         LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
-        //添加排序条件，根据sort进行排序
         queryWrapper.orderByAsc(Category::getSort);
 
         //search
