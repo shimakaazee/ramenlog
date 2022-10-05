@@ -14,10 +14,10 @@ public class ShopDescription implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private int id;
+    private Long id;
 
 
-    private int shopId;
+    private Long shopId;
 
 
     private String name;
