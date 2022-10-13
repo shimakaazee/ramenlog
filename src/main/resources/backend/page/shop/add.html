@@ -73,14 +73,14 @@
                     />
                 </el-form-item>
                 <el-form-item
-                        label="店舗分類:"
+                        label="食事分類:"
                         prop="categoryId"
                 >
                     <el-select
                             v-model="ruleForm.categoryId"
-                            placeholder="店舗分類を選択してください"
+                            placeholder="食事分類を選択してください"
                     >
-                        <el-option v-for="(item,index) in dishList" :key="index" :label="item.name" :value="item.id"/>
+                        <el-option v-for="(item,index) in dishList1" :key="index" :label="item.name" :value="item.id"/>
                     </el-select>
                 </el-form-item>
                 <div>
@@ -317,6 +317,7 @@
                 imageUrl: '',
                 actionType: '',
                 dishList: [],
+                dishList1: [],
                 dishFlavorsData: [],
                 dishFlavors: [],
                 vueRest: '1',
@@ -396,6 +397,7 @@
         },
         created() {
             this.getDishList()
+            this.getDishList1()
 
             this.getFlavorListHand()
             this.id = requestUrlParam('id')
@@ -461,9 +463,18 @@
             },
 
             getDishList() {
-                getCategoryList({'type': 1}).then(res => {
+                getCategoryList({'type': 2}).then(res => {
                     if (res.code === 1) {
                         this.dishList = res.data
+                    } else {
+                        this.$message.error(res.msg || '操作失败')
+                    }
+                })
+            },
+            getDishList1() {
+                getCategoryList({'type': 1}).then(res => {
+                    if (res.code === 1) {
+                        this.dishList1 = res.data
                     } else {
                         this.$message.error(res.msg || '操作失败')
                     }

@@ -36,8 +36,9 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements Sh
 
         this.save(shopDto);
 
-        int shopId = shopDto.getId();
+        Long shopId = shopDto.getId();
         System.out.println(shopDto);
+        System.out.println(shopDto.getId());
 
         List<ShopDescription> descriptions = shopDto.getDescriptions();
         descriptions = descriptions.stream().map((item) -> {
