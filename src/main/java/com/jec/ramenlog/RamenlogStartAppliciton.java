@@ -22,9 +22,5 @@ public class RamenlogStartAppliciton {
         SpringApplication.run(RamenlogStartAppliciton.class, args);
 
     }
-    @EventListener(ApplicationReadyEvent.class)
-    public void send(){
-        senderService.sendEmail("jellyman2012@gmail.com", "Welcome", "Welcome to ramenlog!");
-        log.info("start success");
-    }
+
 }

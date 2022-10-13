@@ -8,7 +8,14 @@ spring:
       driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://localhost:3306/ramenlog?serverTimezone=Asia/Tokyo&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: root
-      password: 5144
+      password:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: shimakaazee@gmail.com
+    password: leulbggacmzeviez
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
 mybatis-plus:
   configuration:
 
@@ -18,4 +25,4 @@ mybatis-plus:
     db-config:
       id-type: ASSIGN_ID
 ramenlog:
-  path: D:\img\
+  path: /Users/victor/img
