@@ -16,8 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ServletComponentScan
 @EnableTransactionManagement
 public class RamenlogStartAppliciton {
-    @Autowired
-    static private EmailSenderService senderService;
+
     public static void main(String[] args) {
         SpringApplication.run(RamenlogStartAppliciton.class, args);
 
