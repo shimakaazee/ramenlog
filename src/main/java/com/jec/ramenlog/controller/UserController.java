@@ -39,7 +39,7 @@ public class UserController {
     @GetMapping("/auth")
     public R<String> authMail(@RequestParam String code) {
         String authCode = (String) redisTemplate.boundValueOps("code").get();
-        System.out.println(authCode+"123");
+        System.out.println(authCode + "123");
         if (code.equals(authCode)) {
             String id = (String) redisTemplate.boundValueOps("id").get();
             return R.success("Mail Auth Success, " + id);
@@ -58,11 +58,11 @@ public class UserController {
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
         UUID uuid = UUID.randomUUID();
-        redisTemplate.boundValueOps("id").set(id, 1, TimeUnit.MINUTES);
-        redisTemplate.boundValueOps("code").set(uuid+"", 1, TimeUnit.MINUTES);
+        redisTemplate.boundValueOps("id").set(id, 5, TimeUnit.MINUTES);
+        redisTemplate.boundValueOps("code").set(uuid + "", 5, TimeUnit.MINUTES);
 
-        String link = "http://localhost:8080/user/auth?code=" + uuid;
-        link = "<a href='"+link+"'>ここだよ</a>";
+        String link = "http://34.207.67.80:8080/user/auth?code=" + uuid;
+        link = "<a href='" + link + "'>ここだよ</a>";
 
         helper.setSubject("Welcome to ramenlog");
         helper.setText(buildContent(id, link), true);

@@ -30,7 +30,7 @@
                         </font>
                     </h2>
                     <p>こんにちは! ラーメンログをご利用いただきありがとうございます。あなたのアカウントはメールで認証されています。
-                        認証リンクは: <font color="#ff8c00">{1}</font>，有効期限は30分です。お早めに認証リンクをクリックしてください。</p><br>
+                        認証リンクは: <font color="#ff8c00">{1}</font>，有効期限は5分です。お早めに認証リンクをクリックしてください。</p><br>
                     <h2 style="margin: 5px 0px; ">
                         <font color="#333333" style="line-height: 20px; ">
                             <font style="line-height: 22px; " size="4">
@@ -38,7 +38,7 @@
                         </font>
                     </h2>
                     <p>Hello! Thanks for using Ramenlog, your account is being authenticated by email, the
-                        verification link is: <font color="#ff8c00">{1}</font>, valid for 30 minutes. Please click on the verification link as soon as
+                        verification link is: <font color="#ff8c00">{1}</font>, valid for 5 minutes. Please click on the verification link as soon as
                         possible!</p>
                     <div style="width:100%;margin:0 auto;">
                         <div style="padding:10px 10px 0;border-top:1px solid #ccc;color:#747474;margin-bottom:20px;line-height:1.3em;font-size:12px;">

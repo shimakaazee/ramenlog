@@ -34,6 +34,7 @@ public class LoginCheckFilter implements Filter{
         //no need no filter
         String[] urls = new String[]{
                 "/employee/login",
+                "/category/page",
                 "/employee/logout",
                 "/user/**",
                 "/backend/**",
