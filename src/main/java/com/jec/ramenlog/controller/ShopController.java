@@ -105,10 +105,26 @@ public class ShopController {
      * @return
      */
     @GetMapping("/{id}")
-    public R<Shop> getById(@PathVariable int id) {
+    public R<Shop> getById(@PathVariable Long id) {
 
-        Shop shop = shopService.getById(id);
+        Shop shop = shopService.getByIdWithDescription(id);
         return R.success(shop);
+    }
+
+    @GetMapping("/list")
+    public R<List<Shop>> list(Shop shop){
+        //构造查询条件
+        LambdaQueryWrapper<Shop> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(shop.getCategoryId() != 0 ,Shop::getCategoryId,shop.getCategoryId());
+        //添加条件，查询状态为1（起售状态）的菜品
+        queryWrapper.eq(Shop::getStatus,1);
+
+
+        //queryWrapper.orderByAsc(Shop::getSort).orderByDesc(Dish::getUpdateTime);
+
+        List<Shop> list = shopService.list(queryWrapper);
+
+        return R.success(list);
     }
 
     /**
@@ -118,10 +134,10 @@ public class ShopController {
      * @return
      */
     @PutMapping
-    public R<String> update(@RequestBody Shop shop) {
-        log.info(shop.toString());
+    public R<String> update(@RequestBody ShopDto shopDto) {
+        log.info(shopDto.toString());
 
-        shopService.updateById(shop);
+        shopService.updateWithDescription(shopDto);
         return R.success("edit success");
     }
 

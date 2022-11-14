@@ -9,7 +9,7 @@ public interface ShopService extends IService<Shop> {
 
     public void saveWithDescription(ShopDto shopDto);
 
-    public ShopDto getByIdWithDescription(Integer id);
+    public ShopDto getByIdWithDescription(Long id);
 
     public void updateWithDescription(ShopDto shopDto);
 }

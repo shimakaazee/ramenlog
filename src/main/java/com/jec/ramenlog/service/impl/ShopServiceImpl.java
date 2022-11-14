@@ -51,7 +51,7 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements Sh
     }
 
 
-    public ShopDto getByIdWithDescription(Integer id) {
+    public ShopDto getByIdWithDescription(Long id) {
 
         Shop shop = this.getById(id);
 
