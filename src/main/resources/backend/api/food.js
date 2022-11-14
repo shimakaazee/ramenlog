@@ -10,7 +10,7 @@ const getDishPage = (params) => {
 // 删除接口
 const deleteDish = (ids) => {
   return $axios({
-    url: '/shop',
+    url: `/shop/${ids}`,
     method: 'delete',
     params: { ids }
   })

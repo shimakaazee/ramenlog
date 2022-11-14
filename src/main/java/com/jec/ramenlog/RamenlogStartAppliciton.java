@@ -20,6 +20,7 @@ public class RamenlogStartAppliciton {
     public static void main(String[] args) {
         SpringApplication.run(RamenlogStartAppliciton.class, args);
 
+
     }
 
 }

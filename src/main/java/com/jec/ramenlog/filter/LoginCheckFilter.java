@@ -27,18 +27,16 @@ public class LoginCheckFilter implements Filter{
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         //1、get url
-        String requestURI = request.getRequestURI();// /backend/index.html
+        String requestURI = request.getRequestURI();// /backend/index.php
 
         log.info("get request：{}",requestURI);
 
         //no need no filter
         String[] urls = new String[]{
                 "/employee/login",
-                "/category/page",
                 "/employee/logout",
-                "/user/**",
                 "/backend/**",
-                "/front/**"
+                "/frontend/**"
         };
 
 

@@ -1,8 +1,10 @@
 package com.jec.ramenlog.controller;
 
 import com.jec.ramenlog.common.R;
+import com.jec.ramenlog.entity.Employee;
 import com.jec.ramenlog.entity.User;
 import com.jec.ramenlog.mail.EmailSenderService;
+import com.jec.ramenlog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -35,7 +37,16 @@ public class UserController {
     private JavaMailSender javaMailSender;
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private UserService userService;
 
+    @PostMapping
+    public R<String> save(@RequestBody User user) {
+
+        userService.save(user);
+
+        return R.success("success");
+    }
     @GetMapping("/auth")
     public R<String> authMail(@RequestParam String code) {
         String authCode = (String) redisTemplate.boundValueOps("code").get();
@@ -61,7 +72,7 @@ public class UserController {
         redisTemplate.boundValueOps("id").set(id, 5, TimeUnit.MINUTES);
         redisTemplate.boundValueOps("code").set(uuid + "", 5, TimeUnit.MINUTES);
 
-        String link = "http://34.207.67.80:8080/user/auth?code=" + uuid;
+        String link = "http://localhost:8080/user/auth?code=" + uuid;
         link = "<a href='" + link + "'>ここだよ</a>";
 
         helper.setSubject("Welcome to ramenlog");
@@ -105,7 +116,7 @@ public class UserController {
                 }
             }
         }
-        //替换html模板中的参数
+
         return MessageFormat.format(buffer.toString(), name, link);
     }
 

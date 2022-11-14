@@ -125,4 +125,11 @@ public class ShopController {
         return R.success("edit success");
     }
 
+    @DeleteMapping("/{ids}")
+    public R<String> delete(@PathVariable Long ids) {
+        System.out.println(ids);
+        shopService.removeById(ids);
+        return R.success("delete success");
+    }
+
 }
