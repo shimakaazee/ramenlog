@@ -11,6 +11,7 @@ import com.jec.ramenlog.service.ShopDescriptionService;
 import com.jec.ramenlog.service.ShopService;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/shop")
 @Slf4j
+@CrossOrigin
+
 public class ShopController {
     @Autowired
     private ShopService shopService;
@@ -42,7 +45,6 @@ public class ShopController {
     @PostMapping
     public R<String> save(@RequestBody ShopDto shopDto) {
         log.info(shopDto.toString());
-        System.out.println(shopDto);
         shopService.saveWithDescription(shopDto);
 
         return R.success("add shop success");
@@ -59,18 +61,14 @@ public class ShopController {
     @GetMapping("/page")
     public R<Page> page(int page, int pageSize, String name) {
 
-        //构造分页构造器对象
         Page<Shop> pageInfo = new Page<>(page, pageSize);
         Page<ShopDto> shopDtoPage = new Page();
 
-        //条件构造器
         LambdaQueryWrapper<Shop> queryWrapper = new LambdaQueryWrapper<>();
-        //添加过滤条件
         queryWrapper.like(name != null, Shop::getName, name);
-        //添加排序条件
         queryWrapper.orderByDesc(Shop::getUpdateTime);
 
-        //执行分页查询
+
         shopService.page(pageInfo, queryWrapper);
 
         BeanUtils.copyProperties(pageInfo, shopDtoPage, "records");
@@ -82,8 +80,8 @@ public class ShopController {
 
             BeanUtils.copyProperties(item, shopDto);
 
-            int categoryId = item.getCategoryId();//分类id
-            //根据id查询分类对象
+            int categoryId = item.getCategoryId();
+
             Category category = categoryService.getById(categoryId);
 
             if (category != null) {
@@ -111,21 +109,20 @@ public class ShopController {
         return R.success(shop);
     }
 
-    @GetMapping("/list")
-    public R<List<Shop>> list(Shop shop){
-        //构造查询条件
+    @PostMapping ("/list")
+    public R<List<Shop>> list(@RequestBody Shop shop){
+
         LambdaQueryWrapper<Shop> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(shop.getCategoryId() != 0 ,Shop::getCategoryId,shop.getCategoryId());
-        //添加条件，查询状态为1（起售状态）的菜品
         queryWrapper.eq(Shop::getStatus,1);
 
-
-        //queryWrapper.orderByAsc(Shop::getSort).orderByDesc(Dish::getUpdateTime);
 
         List<Shop> list = shopService.list(queryWrapper);
 
         return R.success(list);
     }
+
+
 
     /**
      * 修改菜品
@@ -146,6 +143,16 @@ public class ShopController {
         System.out.println(ids);
         shopService.removeById(ids);
         return R.success("delete success");
+    }
+    @PostMapping("/status/{ids}")
+    public R<String> changeStatus(@RequestParam List ids, @RequestParam int status)
+    {
+
+        System.out.println(ids);
+
+        System.out.println(status);
+
+        return null;
     }
 
 }

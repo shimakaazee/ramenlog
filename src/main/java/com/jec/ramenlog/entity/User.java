@@ -24,7 +24,7 @@ public class User implements Serializable {
     private int point;
     private String mail;
     private Long shop_id;
-
+    private String accessCode;
 
 
 

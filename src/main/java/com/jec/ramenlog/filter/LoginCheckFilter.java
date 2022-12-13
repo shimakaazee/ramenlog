@@ -15,7 +15,7 @@ import java.io.IOException;
 /**
  * check login status
  */
-@WebFilter(filterName = "loginCheckFilter",urlPatterns = "/*")
+
 @Slf4j
 public class LoginCheckFilter implements Filter{
 
@@ -35,8 +35,9 @@ public class LoginCheckFilter implements Filter{
         String[] urls = new String[]{
                 "/employee/login",
                 "/employee/logout",
-                "/backend/**",
-                "/frontend/**"
+                "/backend/page/**",
+                "/shop/**",
+                "/user/**"
         };
 
 

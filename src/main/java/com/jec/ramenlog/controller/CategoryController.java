@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/category")
 @Slf4j
+@CrossOrigin
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;

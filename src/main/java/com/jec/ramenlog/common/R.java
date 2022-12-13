@@ -13,6 +13,7 @@ public class R<T> {
 
     private T data; //データ
 
+
     private Map map = new HashMap(); //動的なデータ
 
     public static <T> R<T> success(T object) {
