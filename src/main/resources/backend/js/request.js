@@ -1,20 +1,12 @@
 (function (win) {
   axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
-  // 创建axios实例
   const service = axios.create({
-    // axios中请求配置有baseURL选项，表示请求URL公共部分
     baseURL: '/',
-    // 超时
     timeout: 10000
   })
   // request拦截器
   service.interceptors.request.use(config => {
-    // 是否需要设置 token
-    // const isToken = (config.headers || {}).isToken === false
-    // if (getToken() && !isToken) {
-    //   config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
-    // }
-    // get请求映射params参数
+
     if (config.method === 'get' && config.params) {
       let url = config.url + '?';
       for (const propName of Object.keys(config.params)) {
@@ -42,7 +34,6 @@
       Promise.reject(error)
   })
 
-  // 响应拦截器
   service.interceptors.response.use(res => {
         console.log('---filter---',res)
         // success
@@ -62,13 +53,13 @@
       console.log('err' + error)
       let { message } = error;
       if (message == "Network Error") {
-        message = "后端接口连接异常";
+        message = "backend error";
       }
       else if (message.includes("timeout")) {
-        message = "系统接口请求超时";
+        message = "overtime";
       }
       else if (message.includes("Request failed with status code")) {
-        message = "系统接口" + message.substr(message.length - 3) + "异常";
+        message = "api" + message.substr(message.length - 3) + "error";
       }
       window.ELEMENT.Message({
         message: message,

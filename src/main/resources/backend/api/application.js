@@ -5,3 +5,11 @@ function getApplicationList (params) {
         params
     })
 }
+
+function changeApplyStatus (params) {
+    return $axios({
+        url: '/application',
+        method: 'put',
+        data: { ...params }
+    })
+}

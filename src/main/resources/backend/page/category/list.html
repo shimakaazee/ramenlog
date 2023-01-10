@@ -45,7 +45,7 @@
           label="種類"
         >
           <template slot-scope="scope">
-            <span>{{ scope.row.type == '1' ? '料理別': '' }}</span>
+            <span>{{ scope.row.type == '1' ? '料理': '店舗' }}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -105,10 +105,10 @@
         class="demo-form-inline"
         label-width="100px"
       >
-        <el-form-item label="分类名称：">
+        <el-form-item label="分類名：">
           <el-input
             v-model="classData.name"
-            placeholder="请输入分类名称"
+            placeholder="分類名を入力してください"
             maxlength="14"
           />
         </el-form-item>

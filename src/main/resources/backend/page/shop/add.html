@@ -93,6 +93,18 @@
                                 placeholder="予算を入力してください"
                         />
                     </el-form-item>
+
+                    <el-form-item
+                            label="店舗分類:"
+                            prop="typeId"
+                    >
+                        <el-select
+                                v-model="ruleForm.typeId"
+                                placeholder="店舗分類を選択してください"
+                        >
+                            <el-option v-for="(item,index) in dishList2" :key="index" :label="item.name" :value="item.id"/>
+                        </el-select>
+                    </el-form-item>
                 </div>
                 <div>
                     <el-form-item
@@ -179,7 +191,7 @@
                                     class="flavor"
                             >
                                 <div class="title">
-                                    <span>タグ名</span><span>タグ</span>
+                                    <span>タグ名</span>>
                                 </div>
                                 <div class="cont">
                                     <div
@@ -288,9 +300,9 @@
                         <el-input
                                 v-model="ruleForm.info1"
                                 type="textarea"
-                                :rows="3"
+                                :rows="8"
                                 placeholder="店舗情報を入力してください"
-                                maxlength="200"
+                                maxlength="2000"
                         />
                     </el-form-item>
                 </div>
@@ -342,6 +354,7 @@
                 image: '',
                 actionType: '',
                 dishList: [],
+                dishList2:[],
                 dishFlavorsData: [],
                 dishFlavors: [],
                 vueRest: '1',
@@ -362,7 +375,9 @@
                     'phone': '',
                     'dishFlavors': [],
                     'status': 1,
-                    categoryId: '',
+                    'categoryId': '',
+                    'typeId':''
+
                 },
                 mak: false
             }
@@ -405,6 +420,7 @@
         },
         created() {
             this.getDishList()
+            this.getDishList2()
 
             this.getFlavorListHand()
             this.id = requestUrlParam('id')
@@ -418,8 +434,7 @@
         methods: {
             async init() {
                 queryDishById(this.id).then(res => {
-                    console.log(res)
-                    console.log(114514)
+
                     if (String(res.code) === '1') {
 
                         this.ruleForm = {...res.data}
@@ -456,9 +471,7 @@
             },
 
             keyDownHandle(val, index) {
-                console.log('keyDownHandle----val', val)
-                console.log('keyDownHandle----index', index)
-                console.log('keyDownHandle----this.dishFlavors', this.dishFlavors)
+
                 if (event) {
                     event.cancelBubble = true
                     event.preventDefault()
@@ -475,6 +488,16 @@
                 getCategoryList({'type': 1}).then(res => {
                     if (res.code === 1) {
                         this.dishList = res.data
+                    } else {
+                        this.$message.error(res.msg || '操作失败')
+                    }
+                })
+            },
+
+            getDishList2() {
+                getCategoryList({'type': 2}).then(res => {
+                    if (res.code === 1) {
+                        this.dishList2 = res.data
                     } else {
                         this.$message.error(res.msg || '操作失败')
                     }
@@ -563,7 +586,8 @@
                                             'latitude': '',
                                             'dishFlavors': [],
                                             'status': 1,
-                                            categoryId: ''
+                                            'categoryId': '',
+                                            'typeId':''
                                         }
                                     }
                                 } else {

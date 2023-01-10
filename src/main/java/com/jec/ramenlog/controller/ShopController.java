@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 菜品管理
+ * shop manage
  */
 @RestController
 @RequestMapping("/shop")
@@ -37,7 +37,7 @@ public class ShopController {
 
 
     /**
-     * 新增菜品
+     * add
      *
      * @param
      * @return
@@ -97,7 +97,7 @@ public class ShopController {
     }
 
     /**
-     * 根据id查询菜品信息和对应的口味信息
+     * search
      *
      * @param id
      * @return
@@ -109,12 +109,14 @@ public class ShopController {
         return R.success(shop);
     }
 
-    @PostMapping ("/list")
-    public R<List<Shop>> list(@RequestBody Shop shop){
+    @PostMapping("/list")
+    public R<List<Shop>> list(@RequestBody Shop shop) {
+
 
         LambdaQueryWrapper<Shop> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(shop.getCategoryId() != 0 ,Shop::getCategoryId,shop.getCategoryId());
-        queryWrapper.eq(Shop::getStatus,1);
+        queryWrapper.eq(shop.getCategoryId() != 0, Shop::getCategoryId, shop.getCategoryId());
+        queryWrapper.eq(shop.getTypeId() != 0, Shop::getTypeId, shop.getTypeId());
+        queryWrapper.eq(Shop::getStatus, 1);
 
 
         List<Shop> list = shopService.list(queryWrapper);
@@ -123,9 +125,8 @@ public class ShopController {
     }
 
 
-
     /**
-     * 修改菜品
+     * edit
      *
      * @param
      * @return
@@ -144,14 +145,12 @@ public class ShopController {
         shopService.removeById(ids);
         return R.success("delete success");
     }
-    @PostMapping("/status/{ids}")
-    public R<String> changeStatus(@RequestParam List ids, @RequestParam int status)
-    {
+
+    @GetMapping ("/status/")
+    public R<String> changeStatus(@RequestParam List ids, @RequestParam int status) {
 
         System.out.println(ids);
-
         System.out.println(status);
-
         return null;
     }
 

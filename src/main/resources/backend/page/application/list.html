@@ -70,18 +70,20 @@
             >
                 <template slot-scope="scope">
                     <el-button
+                            v-if="scope.row.status!=='1'"
                             type="text"
                             size="small"
                             class="blueBug"
-                            @click="statusHandle(scope.row)"
+                            @click="statusHandle(scope.row, 1)"
                     >
                         承認する
                     </el-button>
                     <el-button
+                            v-if="scope.row.status!=='2'"
                             type="text"
                             size="small"
                             class="delBut non"
-                            @click="statusHandle(scope.row)"
+                            @click="statusHandle(scope.row, 2)"
                     >
                         拒否する
                     </el-button>
@@ -148,24 +150,43 @@
                 this.init();
             },
             //ステータス
-            statusHandle(row) {
+            statusHandle(row, flag) {
                 this.id = row.id
-                this.status = row.status
-                this.$confirm('このアカウントのステータスを調整することを確認しますか？', '提示', {
-                    'confirmButtonText': '确定',
-                    'cancelButtonText': '取消',
-                    'type': 'warning'
-                }).then(() => {
-                    enableOrDisableEmployee({'id': this.id, 'status': !this.status ? 1 : 0}).then(res => {
-                        console.log('enableOrDisableEmployee', res)
-                        if (String(res.code) === '1') {
-                            this.$message.success('edit success!')
-                            this.handleQuery()
-                        }
-                    }).catch(err => {
-                        this.$message.error('request error' + err)
+                this.status = flag
+
+                if (flag === 1) {
+
+                    this.$confirm('申請を承認する?', '提示', {
+                        'confirmButtonText': '确定',
+                        'cancelButtonText': '取消',
+                        'type': 'warning'
+                    }).then(() => {
+                        changeApplyStatus({'id': this.id, 'status': this.status}).then(res => {
+                            if (String(res.code) === '1') {
+                                this.$message.success('edit success!')
+                                this.handleQuery()
+                            }
+                        }).catch(err => {
+                            this.$message.error('request error' + err)
+                        })
                     })
-                })
+                } else if (flag === 2) {
+                    this.$confirm('申請を拒否する?', '提示', {
+                        'confirmButtonText': '确定',
+                        'cancelButtonText': '取消',
+                        'type': 'warning'
+                    }).then(() => {
+                        changeApplyStatus({'id': this.id, 'status': this.status}).then(res => {
+                            if (String(res.code) === '1') {
+                                this.$message.success('edit success!')
+                                this.handleQuery()
+                            }
+                        }).catch(err => {
+                            this.$message.error('request error' + err)
+                        })
+                    })
+                }
+
             },
             handleSizeChange(val) {
                 this.pageSize = val

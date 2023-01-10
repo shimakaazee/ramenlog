@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.jec.ramenlog.common.R;
 import com.jec.ramenlog.common.StringConstant;
+import com.jec.ramenlog.entity.Category;
 import com.jec.ramenlog.entity.Employee;
 import com.jec.ramenlog.entity.Shop;
 import com.jec.ramenlog.entity.User;
@@ -49,6 +50,30 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
+    @PutMapping
+    public R<String> update(@RequestBody User user) {
+        String pass = user.getPassword();
+        String mail = user.getMail();
+
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+
+        queryWrapper.eq("id", user.getId());
+
+        User u = userService.getOne(queryWrapper);
+
+        if (!(null == pass)) {
+            u.setPassword(DigestUtils.md5DigestAsHex(pass.getBytes()));
+        }
+
+        if (!(null == mail)) {
+            u.setMail(DigestUtils.md5DigestAsHex(mail.getBytes()));
+        }
+
+        userService.updateById(u);
+
+        return R.success("update success");
+    }
 
     @PostMapping
     public R<String> save(@RequestBody User user) {
@@ -129,7 +154,7 @@ public class UserController {
 
     @GetMapping("/list")
     public R<List<User>> list() {
-        //构造查询条件
+
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
 
 

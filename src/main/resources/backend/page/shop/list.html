@@ -175,7 +175,7 @@
                 this.counts = res.data.total
               }
             }).catch(err => {
-              this.$message.error('请求出错了：' + err)
+              this.$message.error('request error：' + err)
             })
           },
           getImage (image) {
@@ -231,7 +231,7 @@
             let params = {}
             if (typeof row === 'string' ) {
               if (this.checkList.length === 0) {
-                this.$message.error('批量操作，请先勾选操作菜品！')
+                this.$message.error('please select one item')
                 return false
               }
               params.id = this.checkList.join(',')
@@ -241,20 +241,20 @@
               params.status = row.status ? '0' : '1'
             }
             this.dishState = params
-            this.$confirm('确认更改该菜品状态?', '提示', {
+            this.$confirm('change status?', '提示', {
               'confirmButtonText': '确定',
               'cancelButtonText': '取消',
               'type': 'warning'
             }).then(() => {
               dishStatusByStatus(this.dishState).then(res => {
                 if (res.code === 1) {
-                  this.$message.success('菜品状态已经更改成功！')
+                  this.$message.success('update success')
                   this.handleQuery()
                 } else {
-                  this.$message.error(res.msg || '操作失败')
+                  this.$message.error(res.msg || 'fail')
                 }
               }).catch(err => {
-                  this.$message.error('请求出错了：' + err)
+                  this.$message.error('request errpr：' + err)
               })
             })
           },

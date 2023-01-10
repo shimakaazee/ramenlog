@@ -26,15 +26,15 @@ public class GlobalExceptionHandler {
 
         if(ex.getMessage().contains("Duplicate entry")){
             String[] split = ex.getMessage().split(" ");
-            String msg = split[2] + "已存在";
+            String msg = split[2] + "already have";
             return R.error(msg);
         }
 
-        return R.error("未知错误");
+        return R.error("unknown error");
     }
 
     /**
-     * 异常处理方法
+     * exception
      * @return
      */
     @ExceptionHandler(CustomException.class)

@@ -112,7 +112,7 @@ public class EmployeeController {
         log.info(employee.toString());
 
         long id = Thread.currentThread().getId();
-        log.info("线程id为：{}",id);
+        log.info("thread id为：{}",id);
         employeeService.updateById(employee);
 
         return R.success("スタッフ edit success!");
