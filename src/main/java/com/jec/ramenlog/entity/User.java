@@ -1,9 +1,6 @@
 package com.jec.ramenlog.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
-import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -27,7 +24,6 @@ public class User implements Serializable {
     private String accessCode;
 
 
-
     private LocalDateTime createTime;
 
 
@@ -35,7 +31,6 @@ public class User implements Serializable {
 
 
     private int createUser;
-
 
 
     private int updateUser;

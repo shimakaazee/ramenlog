@@ -7,18 +7,20 @@ public class BaseContext {
     private static ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
 
     /**
-     * set id
-     * @param id
+     * get id
+     *
+     * @return
      */
-    public static void setCurrentId(int id){
-        threadLocal.set(id);
+    public static int getCurrentId() {
+        return threadLocal.get();
     }
 
     /**
-     * get id
-     * @return
+     * set id
+     *
+     * @param id
      */
-    public static int getCurrentId(){
-        return threadLocal.get();
+    public static void setCurrentId(int id) {
+        threadLocal.set(id);
     }
 }

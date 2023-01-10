@@ -9,9 +9,7 @@ import com.jec.ramenlog.entity.Shop;
 import com.jec.ramenlog.service.CategoryService;
 import com.jec.ramenlog.service.ShopDescriptionService;
 import com.jec.ramenlog.service.ShopService;
-
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -146,7 +144,7 @@ public class ShopController {
         return R.success("delete success");
     }
 
-    @GetMapping ("/status/")
+    @GetMapping("/status/")
     public R<String> changeStatus(@RequestParam List ids, @RequestParam int status) {
 
         System.out.println(ids);

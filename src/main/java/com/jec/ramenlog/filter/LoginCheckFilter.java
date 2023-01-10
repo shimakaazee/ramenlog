@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.AntPathMatcher;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -17,7 +16,7 @@ import java.io.IOException;
  */
 
 @Slf4j
-public class LoginCheckFilter implements Filter{
+public class LoginCheckFilter implements Filter {
 
     public static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
 
@@ -29,7 +28,7 @@ public class LoginCheckFilter implements Filter{
         //1、get url
         String requestURI = request.getRequestURI();// /backend/index.php
 
-        log.info("get request：{}",requestURI);
+        log.info("get request：{}", requestURI);
 
         //no need no filter
         String[] urls = new String[]{
@@ -45,20 +44,20 @@ public class LoginCheckFilter implements Filter{
         boolean check = check(urls, requestURI);
 
         //3、let go
-        if(check){
-            log.info("request{} no need filter ",requestURI);
-            filterChain.doFilter(request,response);
+        if (check) {
+            log.info("request{} no need filter ", requestURI);
+            filterChain.doFilter(request, response);
             return;
         }
 
         //4、if login, let go
-        if(request.getSession().getAttribute("employee") != null){
-            log.info("user id为：{}",request.getSession().getAttribute("employee"));
+        if (request.getSession().getAttribute("employee") != null) {
+            log.info("user id为：{}", request.getSession().getAttribute("employee"));
 
             int empId = (int) request.getSession().getAttribute("employee");
             BaseContext.setCurrentId(empId);
 
-            filterChain.doFilter(request,response);
+            filterChain.doFilter(request, response);
             return;
         }
 
@@ -70,14 +69,15 @@ public class LoginCheckFilter implements Filter{
 
     /**
      * check if need filter
+     *
      * @param urls
      * @param requestURI
      * @return
      */
-    public boolean check(String[] urls,String requestURI){
+    public boolean check(String[] urls, String requestURI) {
         for (String url : urls) {
             boolean match = PATH_MATCHER.match(url, requestURI);
-            if(match){
+            if (match) {
                 return true;
             }
         }

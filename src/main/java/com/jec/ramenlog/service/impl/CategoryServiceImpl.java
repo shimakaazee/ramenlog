@@ -16,6 +16,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     @Autowired
     private ShopService shopService;
+
     @Override
     public void remove(int id) {
 
@@ -25,7 +26,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
         int count = shopService.count(shopLambdaQueryWrapper);
 
-        if (count > 0 ) {
+        if (count > 0) {
             throw new CustomException("can not be deleted of related shop");
         }
 

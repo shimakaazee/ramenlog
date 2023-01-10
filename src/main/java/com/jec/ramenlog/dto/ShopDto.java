@@ -3,6 +3,7 @@ package com.jec.ramenlog.dto;
 import com.jec.ramenlog.entity.Shop;
 import com.jec.ramenlog.entity.ShopDescription;
 import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 

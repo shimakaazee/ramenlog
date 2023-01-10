@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,7 +38,8 @@
                         </font>
                     </h2>
                     <p>Hello! Thanks for using Eatingmap, your account is being authenticated by email, the
-                        verification link is: <font color="#ff8c00">{1}</font>, valid for 5 minutes. Please click on the verification link as soon as
+                        verification link is: <font color="#ff8c00">{1}</font>, valid for 5 minutes. Please click on the
+                        verification link as soon as
                         possible!</p>
                     <div style="width:100%;margin:0 auto;">
                         <div style="padding:10px 10px 0;border-top:1px solid #ccc;color:#747474;margin-bottom:20px;line-height:1.3em;font-size:12px;">

@@ -15,7 +15,7 @@ import java.util.List;
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
     @Override
-    protected  void addResourceHandlers(ResourceHandlerRegistry registry) {
+    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         log.info("reloading static resources...");
         registry.addResourceHandler("/backend/**").addResourceLocations("classpath:/backend/");
         registry.addResourceHandler("/front/**").addResourceLocations("classpath:/front/");
@@ -25,6 +25,6 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     protected void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
         messageConverter.setObjectMapper(new JacksonObjectMapper());
-        converters.add(0,messageConverter);
+        converters.add(0, messageConverter);
     }
 }

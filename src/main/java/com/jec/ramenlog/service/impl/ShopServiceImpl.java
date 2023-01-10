@@ -2,7 +2,6 @@ package com.jec.ramenlog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
 import com.jec.ramenlog.dto.ShopDto;
 import com.jec.ramenlog.entity.Shop;
 import com.jec.ramenlog.entity.ShopDescription;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 

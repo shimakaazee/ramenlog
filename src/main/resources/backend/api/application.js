@@ -1,4 +1,4 @@
-function getApplicationList (params) {
+function getApplicationList(params) {
     return $axios({
         url: '/application/page',
         method: 'get',
@@ -6,10 +6,10 @@ function getApplicationList (params) {
     })
 }
 
-function changeApplyStatus (params) {
+function changeApplyStatus(params) {
     return $axios({
         url: '/application',
         method: 'put',
-        data: { ...params }
+        data: {...params}
     })
 }

@@ -102,7 +102,8 @@
                                 v-model="ruleForm.typeId"
                                 placeholder="店舗分類を選択してください"
                         >
-                            <el-option v-for="(item,index) in dishList2" :key="index" :label="item.name" :value="item.id"/>
+                            <el-option :key="index" :label="item.name" :value="item.id"
+                                       v-for="(item,index) in dishList2"/>
                         </el-select>
                     </el-form-item>
                 </div>
@@ -354,7 +355,7 @@
                 image: '',
                 actionType: '',
                 dishList: [],
-                dishList2:[],
+                dishList2: [],
                 dishFlavorsData: [],
                 dishFlavors: [],
                 vueRest: '1',
@@ -376,7 +377,7 @@
                     'dishFlavors': [],
                     'status': 1,
                     'categoryId': '',
-                    'typeId':''
+                    'typeId': ''
 
                 },
                 mak: false
@@ -587,7 +588,7 @@
                                             'dishFlavors': [],
                                             'status': 1,
                                             'categoryId': '',
-                                            'typeId':''
+                                            'typeId': ''
                                         }
                                     }
                                 } else {

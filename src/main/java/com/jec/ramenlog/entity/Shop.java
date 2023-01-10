@@ -1,16 +1,14 @@
 package com.jec.ramenlog.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- 菜品
+ * 菜品
  */
 @Data
 public class Shop implements Serializable {
@@ -37,7 +35,6 @@ public class Shop implements Serializable {
     private String image;
     private double longitude;
     private double latitude;
-
 
 
     @TableField(fill = FieldFill.INSERT)

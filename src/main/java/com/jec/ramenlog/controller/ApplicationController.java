@@ -4,15 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jec.ramenlog.common.R;
 import com.jec.ramenlog.entity.Application;
-import com.jec.ramenlog.entity.Category;
-import com.jec.ramenlog.entity.Employee;
 import com.jec.ramenlog.service.ApplicationService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by @author 卞凌志

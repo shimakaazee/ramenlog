@@ -3,14 +3,16 @@ package com.jec.ramenlog.controller;
 import com.jec.ramenlog.common.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -27,23 +29,24 @@ public class CommonController {
 
     /**
      * file upload
+     *
      * @param file
      * @return
      */
     @PostMapping("/upload")
-    public R<String> upload(MultipartFile file){
+    public R<String> upload(MultipartFile file) {
 
         log.info(file.toString());
 
         String originalFilename = file.getOriginalFilename();//abc.jpg
         String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
 
-       //uuid
+        //uuid
         String fileName = UUID.randomUUID().toString() + suffix;//dfsdfdfd.jpg
 
         File dir = new File(basePath);
 
-        if(!dir.exists()){
+        if (!dir.exists()) {
 
             dir.mkdirs();
         }
@@ -58,11 +61,12 @@ public class CommonController {
 
     /**
      * file download
+     *
      * @param name
      * @param response
      */
     @GetMapping("/download")
-    public void download(String name, HttpServletResponse response){
+    public void download(String name, HttpServletResponse response) {
 
         try {
 
@@ -74,8 +78,8 @@ public class CommonController {
 
             int len = 0;
             byte[] bytes = new byte[1024];
-            while ((len = fileInputStream.read(bytes)) != -1){
-                outputStream.write(bytes,0,len);
+            while ((len = fileInputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, len);
                 outputStream.flush();
             }
 

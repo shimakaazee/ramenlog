@@ -1,7 +1,5 @@
 package com.jec.ramenlog.mail;
 
-import com.jec.ramenlog.common.R;
-import com.jec.ramenlog.entity.Shop;
 import com.jec.ramenlog.service.ShopService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +17,9 @@ public class testMail {
     private EmailSenderService senderService;
     @Autowired
     private ShopService shopService;
+
     @Test
-    public void testMail(){
+    public void testMail() {
 
         senderService.sendEmail("jellyman2012@gmail.com", "Welcome", "Welcome to ramenlog!");
 

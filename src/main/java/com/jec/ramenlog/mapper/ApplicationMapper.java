@@ -2,7 +2,6 @@ package com.jec.ramenlog.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jec.ramenlog.entity.Application;
-import com.jec.ramenlog.entity.Category;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -13,7 +13,6 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 
 @Slf4j
 @RestController
@@ -35,7 +34,7 @@ public class EmployeeController {
         QueryWrapper<Employee> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", employee.getUsername());
         Employee emp = employeeService.getOne(queryWrapper);
-        
+
         if (emp == null) {
             return R.error("ログイン失敗");
         }
@@ -112,7 +111,7 @@ public class EmployeeController {
         log.info(employee.toString());
 
         long id = Thread.currentThread().getId();
-        log.info("thread id为：{}",id);
+        log.info("thread id为：{}", id);
         employeeService.updateById(employee);
 
         return R.success("スタッフ edit success!");
