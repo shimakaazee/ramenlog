@@ -23,7 +23,7 @@
             <el-input
                     @keyup.enter.native="handleQuery"
                     clearable
-                    placeholder="スタッフ名前を入力してください"
+                    placeholder="ユーザー名前を入力してください"
                     style="width: 250px"
                     v-model="input"
             >
@@ -34,12 +34,7 @@
                         style="cursor: pointer"
                 ></i>
             </el-input>
-            <el-button
-                    @click="addMemberHandle('add')"
-                    type="primary"
-            >
-                + addスタッフ
-            </el-button>
+
         </div>
         <el-table
                 :data="tableData"
@@ -47,17 +42,21 @@
                 stripe
         >
             <el-table-column
-                    label="スタッフ名前"
+                    label="ユーザー名前"
                     prop="name"
             ></el-table-column>
             <el-table-column
                     label="アカウント"
-                    prop="username"
+                    prop="account"
             ></el-table-column>
             <el-table-column
-                    label="携帯番号"
-                    prop="phone"
-            ></el-table-column>
+                    label="店"
+                    prop=shopId
+            >
+                <template slot-scope="scope">
+                    {{ (String(scope.row.shopId) === '0') ||(null ===scope.row.shopId)? "ない" : scope.row.shopId }}
+                </template>
+            </el-table-column>
             <el-table-column label="ステータス">
                 <template slot-scope="scope">
                     {{ String(scope.row.status) === '0' ? '禁止' : '正常' }}
@@ -70,7 +69,6 @@
             >
                 <template slot-scope="scope">
                     <el-button
-                            :class="{notAdmin:position !== '1'}"
                             @click="addMemberHandle(scope.row.id)"
                             class="blueBug"
                             size="small"
@@ -83,9 +81,8 @@
                             class="delBut non"
                             size="small"
                             type="text"
-                            v-if="position === '1'"
                     >
-                        {{ scope.row.status == '1' ? '禁止' : '启用' }}
+                        {{ scope.row.status == '1' ? '殺す' : '生かす' }}
                     </el-button>
                 </template>
             </el-table-column>
@@ -107,7 +104,7 @@
 <script src="../../plugins/element-ui/index.js"></script>
 <script src="../../plugins/axios/axios.min.js"></script>
 <script src="../../js/request.js"></script>
-<script src="../../api/member.js"></script>
+<script src="../../api/user.js"></script>
 <script>
     new Vue({
         el: '#member-app',
@@ -119,14 +116,14 @@
                 pageSize: 10,
                 tableData: [],
                 id: '',
-                status: '',
+                status: ''
             }
         },
         computed: {},
         created() {
             this.init()
-            this.user = JSON.parse(localStorage.getItem('userInfo')).username
-            this.position = JSON.parse(localStorage.getItem('userInfo')).position
+            //this.user = JSON.parse(localStorage.getItem('userInfo')).username
+            //this.position = JSON.parse(localStorage.getItem('userInfo')).position
 
         },
         mounted() {
@@ -140,6 +137,7 @@
                 }
                 await getMemberList(params).then(res => {
                     if (String(res.code) === '1') {
+
                         this.tableData = res.data.records || []
                         this.counts = res.data.total
                     }
@@ -153,19 +151,11 @@
             },
             // add
             addMemberHandle(st) {
-                if (st === 'add') {
-                    window.parent.menuHandle({
-                        id: '2',
-                        url: '/backend/page/member/add.html',
-                        name: 'addスタッフ'
-                    }, true)
-                } else {
-                    window.parent.menuHandle({
-                        id: '2',
-                        url: '/backend/page/member/add.html?id=' + st,
-                        name: 'edit スタッフ'
-                    }, true)
-                }
+                window.parent.menuHandle({
+                    id: '2',
+                    url: '/backend/page/user/add.html?id=' + st,
+                    name: 'edit スタッフ'
+                }, true)
             },
             //ステータス
             statusHandle(row) {

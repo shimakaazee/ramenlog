@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Document</title>
+
+    <link href="../../plugins/element-ui/index.css" rel="stylesheet"/>
+    <link href="../../styles/common.css" rel="stylesheet"/>
+    <link href="../../styles/page.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="addBrand-container" id="member-add-app">
+    <div class="container">
+        <el-form
+                :inline="false"
+                :model="ruleForm"
+                :rules="rules"
+                class="demo-ruleForm"
+                label-width="180px"
+                ref="ruleForm"
+        >
+            <el-form-item label="アカウント:" prop="account">
+                <el-input maxlength="20" placeholder="アカウント" v-model="ruleForm.account"/>
+            </el-form-item>
+            <el-form-item
+                    label="ユーザー名前:"
+                    prop="name"
+            >
+                <el-input
+                        maxlength="20"
+                        placeholder="名前を入力してください"
+                        v-model="ruleForm.name"
+                />
+            </el-form-item>
+
+            <el-form-item
+                    label="店ID:"
+                    prop="shopId"
+            >
+                <el-input
+                        maxlength="20"
+                        placeholder="店IDを入力してください"
+                        v-model="ruleForm.shopId"
+                />
+            </el-form-item>
+
+
+            <div class="subBox address">
+                <el-form-item>
+                    <el-button @click="goBack()">
+                        キャンセル
+                    </el-button>
+                    <el-button
+                            @click="submitForm('ruleForm', false)"
+                            type="primary"
+                    >
+                        セーブ
+                    </el-button>
+                </el-form-item>
+            </div>
+        </el-form>
+    </div>
+</div>
+
+<script src="../../plugins/vue/vue.js"></script>
+<script src="../../plugins/element-ui/index.js"></script>
+<script src="../../plugins/axios/axios.min.js"></script>
+<script src="../../js/request.js"></script>
+<script src="../../api/user.js"></script>
+<script src="../../js/validate.js"></script>
+<script src="../../js/index.js"></script>
+<script>
+    new Vue({
+        el: '#member-add-app',
+        data() {
+            return {
+                id: '',
+                actionType: '',
+                ruleForm: {
+                    'name': '',
+                    'account': '',
+                    'profile': '',
+                    'shopId': ''
+                }
+            }
+        },
+        computed: {
+            rules() {
+                return {
+                    name: [{required: true, trigger: 'blur'}],
+                    account: [{required: true}],
+                    shopId: [{
+                        'validator': checkShopId,
+                        trigger: 'blur'
+                    }]
+
+                }
+            }
+        },
+        created() {
+            this.id = requestUrlParam('id')
+            this.actionType = this.id ? 'edit' : 'add'
+            if (this.id) {
+                this.init()
+            }
+        },
+        mounted() {
+        },
+        methods: {
+            async init() {
+                queryEmployeeById(this.id).then(res => {
+                    console.log(res)
+                    if (String(res.code) === '1') {
+                        console.log(res.data)
+                        this.ruleForm = res.data
+                    } else {
+                        this.$message.error(res.msg || '操作失敗した')
+                    }
+                })
+            },
+            submitForm(formName, st) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        if (this.actionType === 'add') {
+                            const params = {
+                                ...this.ruleForm,
+                            }
+                            addEmployee(params).then(res => {
+                                if (res.code === 1) {
+                                    this.$message.success('スタッフadd成功！')
+                                    if (!st) {
+                                        this.goBack()
+                                    } else {
+                                        this.ruleForm = {
+                                            'name': '',
+                                            'account': '',
+                                            'shopId': '',
+                                            'profile': ''
+                                        }
+                                    }
+                                } else {
+                                    this.$message.error(res.msg || '操作失敗した')
+                                }
+                            }).catch(err => {
+                                this.$message.error('リクエスト エラー:' + err)
+                            })
+                        } else {
+                            this.ruleForm.password = null;
+                            this.ruleForm.mail = null;
+                            const params = {
+                                ...this.ruleForm,
+                            }
+                            editEmployee(params).then(res => {
+                                if (res.code === 1) {
+                                    this.$message.success('ユーザー情報修正成功！')
+                                    this.goBack()
+                                } else {
+                                    this.$message.error(res.msg || '操作失敗した')
+                                }
+                            }).catch(err => {
+                                this.$message.error('リクエスト エラー:' + err)
+                            })
+                        }
+                    } else {
+                        console.log('error submit!!')
+                        return false
+                    }
+                })
+            },
+            goBack() {
+                window.parent.menuHandle({
+                    id: '6',
+                    url: '/backend/page/user/list.html',
+                    name: 'ユーザー管理'
+                }, false)
+            }
+        }
+    })
+</script>
+</body>
+</html>

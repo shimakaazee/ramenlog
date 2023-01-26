@@ -2,11 +2,13 @@ package com.jec.ramenlog.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jec.ramenlog.common.R;
 import com.jec.ramenlog.common.StringConstant;
 import com.jec.ramenlog.entity.User;
 import com.jec.ramenlog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -48,24 +50,22 @@ public class UserController {
 
     @PutMapping
     public R<String> update(@RequestBody User user) {
+
         String pass = user.getPassword();
         String mail = user.getMail();
 
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        System.out.println(user);
 
-        queryWrapper.eq("id", user.getId());
-
-        User u = userService.getOne(queryWrapper);
-
-        if (!(null == pass)) {
-            u.setPassword(DigestUtils.md5DigestAsHex(pass.getBytes()));
-        }
 
         if (!(null == mail)) {
-            u.setMail(DigestUtils.md5DigestAsHex(mail.getBytes()));
+            user.setMail(DigestUtils.md5DigestAsHex(mail.getBytes()));
         }
 
-        userService.updateById(u);
+        if (!(null == pass)) {
+            user.setPassword(DigestUtils.md5DigestAsHex(pass.getBytes()));
+        }
+
+        userService.updateById(user);
 
         return R.success("update success");
     }
@@ -87,6 +87,26 @@ public class UserController {
         return R.error("error");
 
 
+    }
+
+    @GetMapping("/page")
+    public R<Page> page(int page, int pageSize, String name) {
+        log.info("page = {},pageSize = {},name = {}", page, pageSize, name);
+
+
+        Page pageInfo = new Page(page, pageSize);
+
+
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper();
+
+        queryWrapper.like(StringUtils.isNotEmpty(name), User::getName, name);
+
+        queryWrapper.orderByDesc(User::getCreateTime);
+
+
+        userService.page(pageInfo, queryWrapper);
+
+        return R.success(pageInfo);
     }
 
     @PostMapping("/login")

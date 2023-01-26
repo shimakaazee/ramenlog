@@ -107,11 +107,11 @@ public class EmployeeController {
      * @return
      */
     @PutMapping
-    public R<String> update(HttpServletRequest request, @RequestBody Employee employee) {
-        log.info(employee.toString());
-
-        long id = Thread.currentThread().getId();
-        log.info("thread id为：{}", id);
+    public R<String> update(@RequestBody Employee employee) {
+//        log.info(employee.toString());
+//
+//        long id = Thread.currentThread().getId();
+//        log.info("thread id为：{}", id);
         employeeService.updateById(employee);
 
         return R.success("スタッフ edit success!");

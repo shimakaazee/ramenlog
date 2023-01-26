@@ -29,9 +29,6 @@
                 ></i>
             </el-input>
             <div class="tableLab">
-                <span @click="deleteHandle('批量', null)" class="span-btn delBut non">delete all</span>
-                <span @click="statusHandle('1')" class="span-btn blueBug non">turn on all</span>
-                <span @click="statusHandle('0')" class="span-btn delBut non" style="border:none;">turn off all</span>
                 <el-button
                         @click="addFoodtype('add')"
                         type="primary"
@@ -103,14 +100,7 @@
                     >
                         編集
                     </el-button>
-                    <el-button
-                            @click="statusHandle(scope.row)"
-                            class="blueBug"
-                            size="small"
-                            type="text"
-                    >
-                        {{ scope.row.status == '0' ? '開店' : '閉店' }}
-                    </el-button>
+
                     <el-button
                             @click="deleteHandle('单删', scope.row.id)"
                             class="delBut non"

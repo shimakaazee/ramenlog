@@ -24,4 +24,12 @@ function checkUserName(rule, value, callback) {
   }
 }
 
-
+function checkShopId(rule, value, callback) {
+  console.log(value)
+  if ((value.length === 19) || value === '0' || value === 0) {
+    console.log(111)
+    callback()
+  } else {
+    callback(new Error("invalid input"))
+  }
+}

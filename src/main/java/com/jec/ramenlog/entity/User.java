@@ -20,8 +20,9 @@ public class User implements Serializable {
     private String password;
     private int point;
     private String mail;
-    private Long shop_id;
+    private Long shopId;
     private String accessCode;
+    private int status;
 
 
     private LocalDateTime createTime;
